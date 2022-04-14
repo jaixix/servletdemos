@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>servletdemos</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+  </welcome-file-list>
+  
+  <context-param>
+  	<param-name>message</param-name>
+  	<param-value>Welcome to Servlet!</param-value>
+  </context-param>
+  <context-param>
+  	<param-name>expiration</param-name>
+  	<param-value>3600 seconds..</param-value>
+  </context-param>
+  
+  <servlet>
+  	<servlet-name>TestParamServlet</servlet-name>
+  	<servlet-class>contextparamsdemos.TestParamServlet</servlet-class>
+  	<init-param>
+  		<param-name>license</param-name>
+  		<param-value>Trial</param-value>
+  	</init-param>
+  	<init-param>
+  		<param-name>personalMessage</param-name>
+  		<param-value>This is the TestParamServlet</param-value>
+  	</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TestParamServlet</servlet-name>
+  	<url-pattern>/testparamservlet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>TestShoppingParamServlet</servlet-name>
+  	<servlet-class>contextparamsdemos.TestShoppingParamServlet</servlet-class>
+  	<init-param>
+  		<param-name>license</param-name>
+  		<param-value>Full</param-value>
+  	</init-param>
+  	<init-param>
+  		<param-name>personalMessage</param-name>
+  		<param-value>This is the TestShoppingParamServlet</param-value>
+  	</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TestShoppingParamServlet</servlet-name>
+  	<url-pattern>/testshoppingparamservlet</url-pattern>
+  </servlet-mapping>
+  
+  
+</web-app>

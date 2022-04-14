@@ -9,4 +9,23 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  
+  <servlet>
+  	<servlet-name>HelloServlet</servlet-name>
+  	<servlet-class>servletdemos.HelloWorldServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>HelloServlet</servlet-name>
+  	<url-pattern>/hello</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>AdditionServlet</servlet-name>
+  	<servlet-class>servletdemos.AdditionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AdditionServlet</servlet-name>
+  	<url-pattern>/addition</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
