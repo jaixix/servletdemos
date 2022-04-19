@@ -1,11 +1,11 @@
-package userwebapp;
+package productwebapp;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -15,17 +15,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/addServlet")
 
-public class CreateUserServlet extends HttpServlet {
+@WebServlet("/updateProductServlet")
+public class UpdateProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
 	private Connection connection;
+	private PreparedStatement ps;
 	
 //	public void init() {
 //		System.out.println("initializing addservlet...");
 //		try {
 //			Class.forName("com.mysql.jdbc.Driver");
 //			connection = DriverManager.getConnection("jdbc:mysql://localhost/mydb", "root", "root");
+//			ps = connection.prepareStatement("update product set price=? where id=?");
 //		} catch (SQLException | ClassNotFoundException e) {
 //			e.printStackTrace();
 //		}
@@ -39,6 +42,7 @@ public class CreateUserServlet extends HttpServlet {
 			connection = DriverManager.getConnection(context.getInitParameter("dbUrl"), 
 					context.getInitParameter("dbUser"), 
 					context.getInitParameter("dbPassword"));
+			ps = connection.prepareStatement("update product set price=? where id=?");
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -46,24 +50,30 @@ public class CreateUserServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Inside Post Method!");
-		String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
+		int id = Integer.parseInt(request.getParameter("id"));
+		int price = Integer.parseInt(request.getParameter("price"));
+		
 		try {
-			Statement statement = connection.createStatement();
-			int result = statement.executeUpdate("insert into user values ('" + firstName + "', '" + lastName + "', '" + email + "', '" + password + "')");
+			ps.setInt(1, price);
+			ps.setInt(2, id);
+			int result = ps.executeUpdate();
+			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
-			if (result > 0) {
-				out.println("<h1>User Created</h1>");
-			} else {
-				out.println("<h1>Error creating the user</h1>");
-			}
+			out.println("<b>" + result + " products updated. </b>");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
+	public void destroy() {
+		try {
+			if (connection != null) {
+				connection.close();
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	
+	}
+
 }
